@@ -5,7 +5,8 @@ namespace: argocd
 
 resources:
   - namespace.yaml
-  - argocd-ha.yaml
+  - argocd.yaml
+  # - argocd-ha.yaml
   # - ingress.yaml
 
 # Setting some configurations for our Argo install

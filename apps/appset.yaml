@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: test-features-applicationset-rolling-sync
+  namespace: argocd
+
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/gaeljw/argocd-progressive-sync.git
+        revision: HEAD
+        directories:
+        - path: 'test-rolling-sync/*'
+        pathParamPrefix: 'instance'
+
+  strategy:
+    type: RollingSync
+    rollingSync:
+      steps:
+        # One at a time
+        - matchExpressions:
+            - key: instance.path.basenameNormalized
+              operator: NotIn
+              values:
+                - a-value-that-doesnt-exist
+          maxUpdate: 1
+
+  template:
+    metadata:
+      name: 'test-rolling-sync-{{instance.path.basenameNormalized}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/gaeljw/argocd-progressive-sync.git
+        targetRevision: HEAD
+        path: '{{instance.path}}'
+      destination:
+        name: 'in-cluster'
+        namespace: test-rolling-sync
+      syncPolicy:
+        syncOptions:
+        - CreateNamespace=true
+        # Automatic sync disabled (necessary for RollingSYnc)
+        #automated: { }

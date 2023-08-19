@@ -1,0 +1,19 @@
+# This application observes the argocd-apps-test-cluster directory for automatic creation of ArgoCD meta apps
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/gaeljw/argocd-progressive-sync.git
+    targetRevision: HEAD
+    path: apps
+  destination:
+    name: in-cluster
+    namespace: argocd
+  syncPolicy:
+    # Automatic sync enabled
+    automated: {}
+

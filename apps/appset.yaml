@@ -19,15 +19,17 @@ spec:
       steps:
         # One at a time
         - matchExpressions:
-            - key: instance.path.basenameNormalized
-              operator: NotIn
+            - key: roll-one-by-one
+              operator: In
               values:
-                - a-value-that-doesnt-exist
+                - 'true'
           maxUpdate: 1
 
   template:
     metadata:
       name: 'test-rolling-sync-{{instance.path.basenameNormalized}}'
+      labels:
+        roll-one-by-one: 'true'
     spec:
       project: default
       source:

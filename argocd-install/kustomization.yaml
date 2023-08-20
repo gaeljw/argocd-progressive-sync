@@ -17,7 +17,7 @@ configMapGenerator:
       # https://argo-cd.readthedocs.io/en/stable/user-guide/resource_tracking/
       - application.resourceTrackingMethod=annotation
       # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#existing-oidc-provider
-      # - url=https://argocd.k8stest.kelkoo.net
+      # - url=https://argocd.company.net
       # Default is 3mn, for performance we set 30mn and rely on hooks from Gitlab to trigger syncs
       - timeout.reconciliation=1800s
       # Enable Helm support in Kustomize

@@ -26,3 +26,10 @@ configMapGenerator:
       - applicationsetcontroller.enable.progressive.syncs=true
     options:
       disableNameSuffixHash: true
+  - name: argocd-cmd-params-cm
+    behavior: replace
+    literals:
+      # Enable ProgressiveSync for ApplicationSets
+      - applicationsetcontroller.enable.progressive.syncs=true
+    options:
+      disableNameSuffixHash: true
